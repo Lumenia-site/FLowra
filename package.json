@@ -1,0 +1,55 @@
+{
+  "name": "flowra",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Локальный визуальный конструктор Telegram-ботов",
+  "author": "Flowra contributors",
+  "license": "GPL-3.0-or-later",
+  "main": "dist/main/index.cjs",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts",
+    "test:desktop": "node scripts/test-desktop.mjs",
+    "start": "node scripts/start.mjs",
+    "pack": "npm run build && electron-builder --dir",
+    "dist": "npm run build && electron-builder --win nsis portable && node scripts/source.mjs",
+    "lint": "eslint src tests"
+  },
+  "dependencies": {
+    "@xyflow/react": "12.12.1",
+    "fflate": "^0.8.2",
+    "lucide-react": "^0.468.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.0",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^6.0.0",
+    "electron": "45.2.1",
+    "electron-builder": "^26.0.12",
+    "esbuild": "^0.27.0",
+    "eslint": "^9.39.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "typescript-eslint": "^8.46.0",
+    "vite": "8.3.5"
+  },
+  "build": {
+    "appId": "org.flowra.desktop",
+    "productName": "Flowra",
+    "directories": { "output": "release" },
+    "files": ["dist/**/*", "package.json", "LICENSE"],
+    "extraResources": [{ "from": "resources", "to": "flowra" }],
+    "asar": true,
+    "win": { "target": ["nsis", "portable"], "icon": "src/assets/icon.ico", "signExecutable": false },
+    "nsis": { "oneClick": false, "allowToChangeInstallationDirectory": true, "installerLanguages": ["ru_RU", "en_US"], "language": "1049" },
+    "mac": { "category": "public.app-category.developer-tools" },
+    "linux": { "target": ["AppImage"], "category": "Development" }
+  }
+}
